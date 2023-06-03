@@ -14,20 +14,21 @@ const Landing = () => {
 
   const [numberState, setNumberState] = useState(0);
   const [soldTotal, setSoldTotal] = useState(0);
-  const [publicSalePrice, setPublicSalePrice] = useState(0);
+  // const [publicSalePrice, setPublicSalePrice] = useState(0);
   const [alSalePrice, setAlSalePrice] = useState(0);
-  const [alDayOneSalePrice, setAlDayOneSalePrice] = useState(0);
+  // const [alDayOneSalePrice, setAlDayOneSalePrice] = useState(0);
   const [maxPerWallet, setMaxPerWallet] = useState(3);
   const [freeMinted, setFreeminted] = useState(0);
   const [notFreeMinted, setNotFreeMinted] = useState(0);
-  const [canALBuy, setCanALBuy] = useState(false);
-  const [canFreeBuy, setCanFreeBuy] = useState(false);
+  // const [canALBuy, setCanALBuy] = useState(false);
+  // const [canFreeBuy, setCanFreeBuy] = useState(false);
 
   useEffect(() => {
     let timer = setInterval(() => {
       fetchAllNecessaryValues();
     }, 5000);
     return () => {if(timer>0) clearInterval(timer)}
+    // eslint-disable-next-line
   }, []);
 
   const fetchAllNecessaryValues  = async () => {   
@@ -48,7 +49,7 @@ const Landing = () => {
         {
           let temp = values[1].value;
           console.log("pu price = ", temp.toString())
-          setPublicSalePrice(Number(temp.toString()));
+          // setPublicSalePrice(Number(temp.toString()));
         }
         if(values[2].success === true) 
         {
@@ -57,15 +58,15 @@ const Landing = () => {
 
           setAlSalePrice(Number(temp1.toString()));
         }
-        if(values[3].success === true) setAlDayOneSalePrice(values[3].value);
+        // if(values[3].success === true) setAlDayOneSalePrice(values[3].value);
         if(values[4].success === true) setMaxPerWallet(values[4].value);
         if(values[5].success === true) 
         {
           setNotFreeMinted(values[5].value[0]);
           setFreeminted(values[5].value[1]);
         }
-        if(values[6].success === true) setCanALBuy(values[6].value);
-        if(values[7].success === true) setCanFreeBuy(values[7].value);
+        // if(values[6].success === true) setCanALBuy(values[6].value);
+        // if(values[7].success === true) setCanFreeBuy(values[7].value);
       })
       .catch((error) => {
         console.log(error)
@@ -94,6 +95,7 @@ const Landing = () => {
       }
       fetchAllNecessaryValues();
     }
+    // eslint-disable-next-line
   }, [globalAccount]);
 
   const changeNumber = (payload) => {
@@ -127,7 +129,7 @@ const Landing = () => {
       try{
         let returnObject = {}; 
         returnObject = await  isInALWL(globalWeb3, globalAccount);
-        if(returnObject.success == true && returnObject.value == true ) { 
+        if(returnObject.success === true && returnObject.value === true ) { 
           returnObject = await doALSale(globalWeb3, globalAccount, numberState, alSalePrice);
           if(returnObject.success === true) { 
             NotificationManager.success("You 've successfully minted some NFTs.", 'Success', 10000, updateTotal() );
@@ -166,7 +168,7 @@ const Landing = () => {
       try{
         let returnObject = {}; 
         returnObject = await  isInFLWL(globalWeb3, globalAccount);
-        if(returnObject.success == true && returnObject.value == true ) { 
+        if(returnObject.success === true && returnObject.value === true ) { 
           returnObject = await doFreemint(globalWeb3, globalAccount);
           if(returnObject.success === true) { 
             NotificationManager.success("You 've successfully minted some NFTs.", 'Success', 10000, updateTotal() );

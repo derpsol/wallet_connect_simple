@@ -31,14 +31,14 @@ const web3Modal = new Web3Modal({
 const MainLayout = ({ children }) => {
 
   const globalAccount = useSelector((state) => state.auth.currentWallet);
-  const globalWeb3 = useSelector((state) => state.auth.globalWeb3);
-  const claimableAmount = useSelector((state) => state.auth.balance);
+  // const globalWeb3 = useSelector((state) => state.auth.globalWeb3);
+  // const claimableAmount = useSelector((state) => state.auth.balance);
   const globalChainId = useSelector(state => state.auth.currentChainId);
   const dispatch = useDispatch();
 
   const [connected, setConnected] = useState(false);
   const [web3Provider, setWeb3Provider] = useState({});
-  const [compressedAddress, setCompressedAddress] = useState("");
+  // const [compressedAddress, setCompressedAddress] = useState("");
 
 
   const makeCompressedAccount = (accountStr) => {
@@ -64,20 +64,20 @@ const MainLayout = ({ children }) => {
 
       if (accounts[0]) {
         console.log("accounts[0] = ", accounts[0]);
-        setCompressedAddress(makeCompressedAccount(accounts[0]));
+        // setCompressedAddress(makeCompressedAccount(accounts[0]));
         setConnected(true);
         dispatch(setConnectedWalletAddress(accounts[0]));
 
         if (globalChainId === ETHEREUM_CHAIN_ID)
           NotificationManager.success("You've connected a wallet account. " + makeCompressedAccount(accounts[0]), "Success", 5000, () => { });
       } else {
-        setCompressedAddress("");
+        // setCompressedAddress("");
         setConnected(false);
         dispatch(setConnectedChainId(undefined));
         dispatch(setConnectedWalletAddress(undefined));
       }
     } catch (error) {
-      setCompressedAddress("");
+      // setCompressedAddress("");
       console.error(error);
       setConnected(false);
       dispatch(setConnectedChainId(undefined));
@@ -89,7 +89,7 @@ const MainLayout = ({ children }) => {
     console.log(" onClickDisconnect() 00 ");
     try {
       await web3Modal.clearCachedProvider();
-      setCompressedAddress("");
+      // setCompressedAddress("");
       dispatch(setConnectedChainId(undefined));
       dispatch(setConnectedWalletAddress(undefined));
     } catch (e) {
@@ -130,11 +130,12 @@ const MainLayout = ({ children }) => {
         }
       };
     }
+    // eslint-disable-next-line
   }, [web3Provider, dispatch]);
 
   useEffect(() => {
     if (globalAccount) {
-      setCompressedAddress(makeCompressedAccount(globalAccount));
+      // setCompressedAddress(makeCompressedAccount(globalAccount));
       setConnected(true);
     }
   }, [globalAccount]);
